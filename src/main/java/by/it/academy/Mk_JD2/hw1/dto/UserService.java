@@ -20,9 +20,10 @@ public class UserService implements IUserService<String, User> {
 
     @Override
     public void addToStorage(User item) {
-
         userList.put(item.getLogin(), item);
     }
+
+
 
     public static UserService getInstance(){
         return instance;

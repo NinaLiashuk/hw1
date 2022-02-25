@@ -34,7 +34,7 @@ public class MassagePutServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        User user = (User) req.getSession().getAttribute("newUser");
+        User user = (User) req.getSession().getAttribute("user");
 
         String sender = user.getLogin();
         String login = req.getParameter("login");
@@ -49,7 +49,7 @@ public class MassagePutServlet extends HttpServlet {
 
         } else {
             Message message = new Message(login, text, sender, LocalDateTime.now());
-            messageService.addToStorage(login, message);
+            messageService.addToStorage(message);
             req.getSession().setAttribute("newMessage", message);
             getServletContext().getRequestDispatcher("/message_send.jsp").forward(req, resp);
         }

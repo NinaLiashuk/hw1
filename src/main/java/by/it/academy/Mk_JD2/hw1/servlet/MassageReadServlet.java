@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet(name = "MassageReadServlet", urlPatterns = "/chats")
@@ -25,17 +27,11 @@ public class MassageReadServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html");
 
-        Map<String, Message> listMessage = messageService.getFromStorage();
-        User user = (User) req.getSession().getAttribute("thisUser");
+        Map<String, List<Message>> listMessage = messageService.getFromStorage();
+        User user = (User) req.getSession().getAttribute("user");
+        List<Message> list = listMessage.get(user.getLogin());
 
-        String login = user.getLogin();
-
-        if (messageService.getFromStorage().containsKey(login)){
-            req.setAttribute("listMessage",listMessage);
-            getServletContext().getRequestDispatcher("/message_read.jsp").forward(req, resp);
-        }
-        else {
-            getServletContext().getRequestDispatcher("/message_page.jsp").forward(req, resp);
-        }
+        req.setAttribute("listMessage", list);
+        getServletContext().getRequestDispatcher("/message_read.jsp").forward(req, resp);
     }
 }

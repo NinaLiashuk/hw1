@@ -54,7 +54,7 @@ public class UserSignUpServlet extends HttpServlet {
             User user = new User(name, login, password, birthday);
             userService.addToStorage(user);
             getServletContext().getRequestDispatcher("/registration_success.jsp").forward(req, resp);
-            req.getSession().setAttribute("newUser",user);
+            req.getSession().setAttribute("user",user);
         }
     }
 }

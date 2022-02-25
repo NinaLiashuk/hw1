@@ -39,11 +39,11 @@ public class UserSignInServlet extends HttpServlet {
         }
 
         if (users.containsKey(login) && users.get(login).getPassword().equals(password)){
-            req.getSession().setAttribute("thisUser", users.get(login));
+            req.getSession().setAttribute("user", users.get(login));
             getServletContext().getRequestDispatcher("/message_page.jsp").forward(req, resp);
         } if (users.containsKey(login) && !users.get(login).getPassword().equals(password)){
             getServletContext().getRequestDispatcher("/password_retry.jsp").forward(req, resp);
-        } else {
+        } if(!users.containsKey(login)) {
             getServletContext().getRequestDispatcher("/login_retry.jsp").forward(req, resp);
         }
     }
